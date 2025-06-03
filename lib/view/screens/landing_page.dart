@@ -3,9 +3,14 @@ import 'package:markme/view/common/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:lottie/lottie.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
@@ -17,7 +22,7 @@ class LandingPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
-              // Animation Section
+              // Animation
               Expanded(
                 flex: 2,
                 child: Center(
@@ -69,58 +74,86 @@ class LandingPage extends StatelessWidget {
                     Column(
                       children: [
                         // Get Started Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Handle get started action
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              elevation: 2,
-                              shadowColor: AppColors.primary.withAlpha(77),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                        _buildAnimatedButton(
+                          onPressed: () {
+                            // TODO: Handle get started action
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 58,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  AppColors.primary,
+                                  AppColors.primaryLight,
+                                ],
                               ),
+                              borderRadius: BorderRadius.circular(18),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primary.withAlpha(102),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
                             ),
-                            child: Text(
-                              "Get Started",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Get Started",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Icon(
+                                    Icons.arrow_forward_rounded,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         // Login Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              // Handle login action
-                            },
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: AppColors.primary,
-                              side: BorderSide(
-                                color: AppColors.primary,
-                                width: 2,
+                        _buildAnimatedButton(
+                          onPressed: () {
+                            // TODO: Handle login action
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 58,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha(51),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: AppColors.primary.withAlpha(77),
+                                width: 1.5,
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.white.withAlpha(26),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
                             ),
-                            child: Text(
-                              "Already have an account? Sign In",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                            child: Center(
+                              child: Text(
+                                "Already have an account? Sign In",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
                           ),
@@ -131,7 +164,7 @@ class LandingPage extends StatelessWidget {
                 ),
               ),
 
-              // Bottom Section
+              // Bottom Section - 3 Dots
               Padding(
                 padding: EdgeInsets.only(bottom: media.height * 0.02),
                 child: Row(
@@ -169,6 +202,19 @@ class LandingPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildAnimatedButton({
+    required VoidCallback onPressed,
+    required Widget child,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        child: child,
       ),
     );
   }
