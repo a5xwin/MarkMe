@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:markme/view/screens/landing_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MarkMe',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        fontFamily: 'Satoshi'
       ),
-      home: const Text('Flutter Demo Home Page'),
+      home: const LandingPage(),
     );
   }
 }
