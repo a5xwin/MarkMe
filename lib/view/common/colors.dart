@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Primary Colors - Soft and Professional
-  static const Color primary = Color(0xFF4A90E2);        // Soft blue
-  static const Color primaryLight = Color(0xFF7BB3F0);   // Lighter blue
-  static const Color primaryDark = Color(0xFF2E5F8F);    // Darker blue
+  // Primary Colors - Using the vibrant blue from the image
+  static const Color primary = Color(0xFF1976D2);        // Deep vibrant blue
+  static const Color primaryLight = Color(0xFF42A5F5);   // Lighter blue
+  static const Color primaryDark = Color(0xFF0A1653);    // Deeper blue
   
   // Secondary Colors
   static const Color secondary = Color(0xFF6C7B7F);      // Muted blue-gray
   static const Color secondaryLight = Color(0xFF9CADB2); // Light gray-blue
   static const Color secondaryDark = Color(0xFF4A5759);  // Dark gray-blue
   
-  // Background Colors
+  // Background Colors - Light Theme
   static const Color background = Color(0xFFFAFBFC);     // Very light gray
   static const Color surface = Color(0xFFFFFFFF);        // Pure white
   static const Color surfaceVariant = Color(0xFFF5F7FA); // Light gray
   
-  // Text Colors
+  // Text Colors - Light Theme
   static const Color textPrimary = Color(0xFF1A1D1F);    // Almost black
   static const Color textSecondary = Color(0xFF6B7280);  // Medium gray
   static const Color textTertiary = Color(0xFF9CA3AF);   // Light gray
@@ -32,9 +32,9 @@ class AppColors {
   static const Color success = Color(0xFF059669);        // Muted green
   static const Color warning = Color(0xFFD97706);        // Muted orange
   static const Color error = Color(0xFFDC2626);          // Muted red
-  static const Color info = Color(0xFF2563EB);           // Muted blue
+  static const Color info = Color(0xFF1976D2);           // Using main blue
   
-  // Neutral Colors
+  // Neutral Colors - Light Theme
   static const Color neutral50 = Color(0xFFF9FAFB);
   static const Color neutral100 = Color(0xFFF3F4F6);
   static const Color neutral200 = Color(0xFFE5E7EB);
@@ -57,14 +57,14 @@ class AppColors {
   static const Color divider = Color(0xFFE5E7EB);
   
   // Interactive Colors
-  static const Color buttonPrimary = Color(0xFF4A90E2);
+  static const Color buttonPrimary = Color(0xFF1976D2);  // Using main blue
   static const Color buttonSecondary = Color(0xFFF3F4F6);
   static const Color buttonDisabled = Color(0xFFE5E7EB);
   
   // Input Colors
   static const Color inputBackground = Color(0xFFF9FAFB);
   static const Color inputBorder = Color(0xFFD1D5DB);
-  static const Color inputFocused = Color(0xFF4A90E2);
+  static const Color inputFocused = Color(0xFF1976D2);    // Using main blue
   static const Color inputError = Color(0xFFDC2626);
   
   // Attendance Stats Colors (Subtle versions)
@@ -76,7 +76,7 @@ class AppColors {
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF4A90E2), Color(0xFF7BB3F0)],
+    colors: [Color(0xFF1976D2), Color(0xFF42A5F5)],
   );
   
   static const LinearGradient backgroundGradient = LinearGradient(
