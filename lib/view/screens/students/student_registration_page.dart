@@ -226,11 +226,15 @@ class _StudentRegisterationPageState extends State<StudentRegisterationPage> {
     }
   }
 
-  dynamic _submitForm() {
-    CustomSnackbar.showSuccessSnackBar(
-      snackBarTitle: 'Success!',
-      snackBarMessage: 'User Registered Successfully! Please Login Now',
+  void _submitForm() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackbar.showSuccessSnackBar(
+        snackBarTitle: 'Success!',
+        snackBarMessage: 'User Registered Successfully! Please Login Now',
+      ),
     );
+    
+    // TODO: Navigate to login page
   }
 
   void _nextPage() {
@@ -827,16 +831,7 @@ class _StudentRegisterationPageState extends State<StudentRegisterationPage> {
           _buildDropdownField(
             value: _selectedCollege,
             items: _colleges,
-            label: 'Colleges',
-            icon: Icons.school_outlined,
-            onChanged: (value) => setState(() => _selectedCollege = value),
-          ),
-
-          const SizedBox(height: 16),
-          _buildDropdownField(
-            value: _selectedCourse,
-            items: _courses,
-            label: 'Cources',
+            label: 'College',
             icon: Icons.school_outlined,
             onChanged: (value) => setState(() => _selectedCollege = value),
           ),
