@@ -26,7 +26,7 @@ class _StudentRegisterationPageState extends State<StudentRegisterationPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _studentIdController = TextEditingController();
+  final TextEditingController _ktuIdController = TextEditingController();
 
   // Other Indicators
   bool _isLoading = false;
@@ -82,7 +82,7 @@ class _StudentRegisterationPageState extends State<StudentRegisterationPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-    _studentIdController.dispose();
+    _ktuIdController.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -199,7 +199,7 @@ class _StudentRegisterationPageState extends State<StudentRegisterationPage> {
   }
 
   bool _validateAcademicInfo() {
-    if (_studentIdController.text.isEmpty ||
+    if (_ktuIdController.text.isEmpty ||
         _selectedCollege == null ||
         _selectedDepartment == null ||
         _selectedCourse == null ||
@@ -819,9 +819,9 @@ class _StudentRegisterationPageState extends State<StudentRegisterationPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTextField(
-            controller: _nameController,
+            controller: _ktuIdController,
             label: 'KTU ID',
-            icon: Icons.person_outline,
+            icon: Icons.badge_outlined,
           ),
           const SizedBox(height: 16),
           _buildDropdownField(
