@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:markme/view/common/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:lottie/lottie.dart';
+import 'package:markme/view/screens/role_selection_screen.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -76,7 +77,12 @@ class _LandingPageState extends State<LandingPage> {
                         // Get Started Button
                         _buildAnimatedButton(
                           onPressed: () {
-                            // TODO: Handle get started action
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RoleSelectionPage(),
+                              ),
+                            );
                           },
                           child: Container(
                             width: double.infinity,
