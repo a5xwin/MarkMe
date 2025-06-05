@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:markme/view/common/colors.dart';
 import 'package:markme/view/screens/students/student_registration_page.dart';
 import 'package:markme/view/screens/teachers/teacher_resiteration_page.dart';
+import 'package:markme/view/screens/home_page.dart';
+
 
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({super.key});
@@ -94,7 +96,12 @@ class RoleSelectionPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // TODO: Implement login navigation
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                        
                       },
                       child: Text(
                         'Sign In',
