@@ -16,6 +16,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Map<String, int> todoStats = {'total': 0, 'completed': 0};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTodoStats();
+  }
+
+  Future<void> _loadTodoStats() async {
+    final stats = await TodoStats.getStats();
+    setState(() {
+      todoStats = stats;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,36 +112,25 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: 1,
               ),
               children: [
-                // Attendance Card
-                _buildNeumorphicCard(
-                  child: _buildStatCard(
-                    title: "Attendance",
-                    value: "83%",
-                    subtitle: "Past 1 week",
-                    icon: Icons.calendar_today,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AttendancePage(),
-                      ),
-                    );
-                  },
+                _buildStatCard(
+                  title: "Attendance",
+                  value: "83%",
+                  subtitle: "Past 1 week",
+                  icon: Icons.calendar_today,
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AttendancePage())),
                 ),
-                // Productivity Card
-                _buildNeumorphicCard(
-                  child: _buildStatCard(
-                    title: "Productivity",
-                    value: "100%",
-                    subtitle: "Based on To-Do",
-                    icon: Icons.check_circle_outline,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const TodoPage()),
-                    );
+                _buildStatCard(
+                  title: "Productivity",
+                  value: "${todoStats['total']! == 0 || todoStats['total']! == todoStats['completed']! ? 100 : ((todoStats['completed']! / todoStats['total']! * 100).round())}%",
+                  // on the home screen- 100% productivity will be shows in 2 cases:
+                  //   a) if total number of tasks =0 OR
+                  //   b) if total number of tasks==completed tasks
+                  
+                  subtitle: "Based on To-Do",
+                  icon: Icons.check_circle_outline,
+                  onTap: () async {
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const TodoPage()));
+                    _loadTodoStats(); // Refresh stats when coming back
                   },
                 ),
               ],
@@ -196,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(
@@ -210,21 +214,14 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const TimetablePage(),
-                  ),
-                );
-              },
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TimetablePage())),
             ),
 
             const SizedBox(height: 24),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -249,14 +246,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 4),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const PyqPage(),
-                              ),
-                            );
-                          },
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PyqPage())),
                           child: const Text(
                             "View PYQ's",
                             style: TextStyle(
@@ -288,35 +278,19 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: 1,
               ),
               children: [
-                // Bunk Calculator Card
-                _buildNeumorphicCard(
-                  child: _buildStatCard(
-                    title: "Bunk Calculator",
-                    value: "—",
-                    subtitle: "Bunk classes safely!",
-                    icon: Icons.event_busy,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const BcPage()),
-                    );
-                  },
+                _buildStatCard(
+                  title: "Bunk Calculator",
+                  value: "—",
+                  subtitle: "Bunk classes safely!",
+                  icon: Icons.event_busy,
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const BcPage())),
                 ),
-                // GPA Finder Card
-                _buildNeumorphicCard(
-                  child: _buildStatCard(
-                    title: "GPA Finder",
-                    value: "—",
-                    subtitle: "Calculate your GPA",
-                    icon: Icons.school,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const GpaPage()),
-                    );
-                  },
+                _buildStatCard(
+                  title: "GPA Finder",
+                  value: "—",
+                  subtitle: "Calculate your GPA",
+                  icon: Icons.school,
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GpaPage())),
                 ),
               ],
             ),
@@ -347,24 +321,22 @@ class _HomePageState extends State<HomePage> {
               color: const Color(0xFF1E1E1E),
               boxShadow: isPressed
                   ? [
-                      // Inset shadow for pressed effect
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         offset: const Offset(2, 2),
                         blurRadius: 2,
                         spreadRadius: -1,
                       ),
                     ]
                   : [
-                      // Outer shadows for unpressed effect
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         offset: const Offset(4, 4),
                         blurRadius: 8,
                         spreadRadius: 0,
                       ),
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.1),
+                        color: const Color.fromARGB(255, 115, 165, 230).withValues(alpha: 0.1),
                         offset: const Offset(-4, -4),
                         blurRadius: 8,
                         spreadRadius: 0,
@@ -378,56 +350,92 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Simplified unified card builder for all 4 cards
   Widget _buildStatCard({
     required String title,
     required String value,
     required String subtitle,
-    IconData? icon,
+    required IconData icon,
+    required VoidCallback onTap,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, color: Colors.white, size: 24),
-            const SizedBox(height: 8),
-          ],
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-              fontFamily: 'Satoshi',
+    bool isPressed = false;
+    
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return GestureDetector(
+          onTap: onTap,
+          onTapDown: (_) => setState(() => isPressed = true),
+          onTapUp: (_) => setState(() => isPressed = false),
+          onTapCancel: () => setState(() => isPressed = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: const Color(0xFF1E1E1E),
+              boxShadow: isPressed
+                  ? [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        offset: const Offset(2, 2),
+                        blurRadius: 2,
+                        spreadRadius: -1,
+                      ),
+                    ]
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        offset: const Offset(4, 4),
+                        blurRadius: 8,
+                        spreadRadius: 0,
+                      ),
+                      BoxShadow(
+                        color: const Color.fromARGB(12, 33, 33, 33),
+                        offset: const Offset(-4, -4),
+                        blurRadius: 8,
+                        spreadRadius: 0,
+                      ),
+                    ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(icon, color: Colors.white, size: 24),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: 'Satoshi',
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontFamily: 'Satoshi',
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF757479),
+                    fontFamily: 'Satoshi',
+                  ),
+                ),
+              ],
             ),
           ),
-          const Spacer(),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              fontFamily: 'Satoshi',
-            ),
-          ),
-          const Spacer(),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF757479),
-              fontFamily: 'Satoshi',
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
