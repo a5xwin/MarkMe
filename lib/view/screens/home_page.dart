@@ -81,25 +81,32 @@ class _HomePageState extends State<HomePage> {
                 fontFamily: 'Satoshi',
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 42),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: const Color(0xFF1E1E1E),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  "No pending tasks for today",
+                  todoStats['total']! == 0 ||
+                          todoStats['total']! == todoStats['completed']!
+                      ? "Yay, no more pending tasks!"
+                      : "${todoStats['total']! - todoStats['completed']!} pending tasks left",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey,
+                    color:
+                        todoStats['total']! == 0 ||
+                            todoStats['total']! == todoStats['completed']!
+                        ? Colors.grey
+                        : Colors.grey,
                     fontFamily: 'Satoshi',
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 12),
 
             // First Row of Cards (Attendance and Productivity)
             GridView(
@@ -117,19 +124,28 @@ class _HomePageState extends State<HomePage> {
                   value: "83%",
                   subtitle: "Past 1 week",
                   icon: Icons.calendar_today,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AttendancePage())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AttendancePage(),
+                    ),
+                  ),
                 ),
                 _buildStatCard(
                   title: "Productivity",
-                  value: "${todoStats['total']! == 0 || todoStats['total']! == todoStats['completed']! ? 100 : ((todoStats['completed']! / todoStats['total']! * 100).round())}%",
+                  value:
+                      "${todoStats['total']! == 0 || todoStats['total']! == todoStats['completed']! ? 100 : ((todoStats['completed']! / todoStats['total']! * 100).round())}%",
+
                   // on the home screen- 100% productivity will be shows in 2 cases:
                   //   a) if total number of tasks =0 OR
                   //   b) if total number of tasks==completed tasks
-                  
                   subtitle: "Based on To-Do",
                   icon: Icons.check_circle_outline,
                   onTap: () async {
-                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const TodoPage()));
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const TodoPage()),
+                    );
                     _loadTodoStats(); // Refresh stats when coming back
                   },
                 ),
@@ -163,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,  
+                        color: Colors.black,
                         fontFamily: 'Satoshi',
                       ),
                     ),
@@ -214,7 +230,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TimetablePage())),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TimetablePage()),
+              ),
             ),
 
             const SizedBox(height: 24),
@@ -246,7 +265,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 4),
                         GestureDetector(
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PyqPage())),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PyqPage(),
+                            ),
+                          ),
                           child: const Text(
                             "View PYQ's",
                             style: TextStyle(
@@ -266,7 +290,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             const SizedBox(height: 24),
-            
+
             // Second Row of Cards (Bunk Calculator and GPA Finder)
             GridView(
               shrinkWrap: true,
@@ -283,14 +307,20 @@ class _HomePageState extends State<HomePage> {
                   value: "—",
                   subtitle: "Bunk classes safely!",
                   icon: Icons.event_busy,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const BcPage())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BcPage()),
+                  ),
                 ),
                 _buildStatCard(
                   title: "GPA Finder",
                   value: "—",
                   subtitle: "Calculate your GPA",
                   icon: Icons.school,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GpaPage())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const GpaPage()),
+                  ),
                 ),
               ],
             ),
@@ -306,7 +336,7 @@ class _HomePageState extends State<HomePage> {
     required VoidCallback onTap,
   }) {
     bool isPressed = false;
-    
+
     return StatefulBuilder(
       builder: (context, setState) {
         return GestureDetector(
@@ -336,7 +366,12 @@ class _HomePageState extends State<HomePage> {
                         spreadRadius: 0,
                       ),
                       BoxShadow(
-                        color: const Color.fromARGB(255, 115, 165, 230).withValues(alpha: 0.1),
+                        color: const Color.fromARGB(
+                          255,
+                          115,
+                          165,
+                          230,
+                        ).withValues(alpha: 0.1),
                         offset: const Offset(-4, -4),
                         blurRadius: 8,
                         spreadRadius: 0,
@@ -359,7 +394,7 @@ class _HomePageState extends State<HomePage> {
     required VoidCallback onTap,
   }) {
     bool isPressed = false;
-    
+
     return StatefulBuilder(
       builder: (context, setState) {
         return GestureDetector(
