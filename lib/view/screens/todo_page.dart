@@ -82,7 +82,7 @@ class _TodoPageState extends State<TodoPage> {
   int get totalTasks => todoItems.length;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
